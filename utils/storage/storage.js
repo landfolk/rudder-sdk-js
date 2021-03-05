@@ -5,13 +5,13 @@ import { Cookie } from "./cookie";
 import { Store } from "./store";
 
 const defaults = {
-  user_storage_key: "rl_user_id",
-  user_storage_trait: "rl_trait",
-  user_storage_anonymousId: "rl_anonymous_id",
-  group_storage_key: "rl_group_id",
-  group_storage_trait: "rl_group_trait",
-  prefix: "RudderEncrypt:",
-  key: "Rudder",
+  user_storage_key: "session_user_id",
+  user_storage_trait: "session_trait",
+  user_storage_anonymousId: "session_anonymous_id",
+  group_storage_key: "session_group_id",
+  group_storage_trait: "session_group_trait",
+  prefix: "LF:",
+  key: "Landfolk",
 };
 
 /**
@@ -20,10 +20,10 @@ const defaults = {
 class Storage {
   constructor() {
     // First try setting the storage to cookie else to localstorage
-    Cookie.set("rudder_cookies", true);
+    Cookie.set("landfolk_insights", true);
 
-    if (Cookie.get("rudder_cookies")) {
-      Cookie.remove("rudder_cookies");
+    if (Cookie.get("landfolk_insights")) {
+      Cookie.remove("landfolk_insights");
       this.storage = Cookie;
       return;
     }
