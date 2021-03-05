@@ -26,7 +26,6 @@ class CookieLocal {
     // the default maxage and path
     this._options = defaults(options, {
       maxage: 60 * 30, // Expiry after 30 minutes
-      secure: true,
       path: "/",
       domain,
       samesite: "Lax",
