@@ -5,15 +5,15 @@ import { Cookie } from "./cookie";
 import { Store } from "./store";
 
 const defaults = {
-  user_storage_key: "rl_user_id",
-  user_storage_trait: "rl_trait",
-  user_storage_anonymousId: "rl_anonymous_id",
-  group_storage_key: "rl_group_id",
-  group_storage_trait: "rl_group_trait",
-  page_storage_init_referrer: "rl_page_init_referrer",
-  page_storage_init_referring_domain: "rl_page_init_referring_domain",
-  prefix: "RudderEncrypt:",
-  key: "Rudder",
+  user_storage_key: "session_user_id",
+  user_storage_trait: "session_trait",
+  user_storage_anonymousId: "session_anonymous_id",
+  group_storage_key: "session_group_id",
+  group_storage_trait: "session_group_trait",
+  page_storage_init_referrer: "session_page_init_referrer",
+  page_storage_init_referring_domain: "session_page_init_referring_domain",
+  prefix: "LF:",
+  key: "Landfolk",
 };
 
 /**
@@ -22,10 +22,10 @@ const defaults = {
 class Storage {
   constructor() {
     // First try setting the storage to cookie else to localstorage
-    Cookie.set("rudder_cookies", true);
+    Cookie.set("landfolk_insights", true);
 
-    if (Cookie.get("rudder_cookies")) {
-      Cookie.remove("rudder_cookies");
+    if (Cookie.get("landfolk_insights")) {
+      Cookie.remove("landfolk_insights");
       this.storage = Cookie;
       return;
     }
@@ -182,7 +182,7 @@ class Storage {
   /**
    * @param {*} value
    */
-  setInitialReferrer(value){
+  setInitialReferrer(value) {
     this.storage.set(
       defaults.page_storage_init_referrer,
       this.encryptValue(this.stringify(value))
@@ -192,7 +192,7 @@ class Storage {
   /**
    * @param {*} value
    */
-  setInitialReferringDomain(value){
+  setInitialReferringDomain(value) {
     this.storage.set(
       defaults.page_storage_init_referring_domain,
       this.encryptValue(this.stringify(value))
@@ -255,7 +255,7 @@ class Storage {
   /**
    * get stored initial referrer
    */
-  getInitialReferrer(value){
+  getInitialReferrer(value) {
     return this.parse(
       this.decryptValue(this.storage.get(defaults.page_storage_init_referrer))
     );
@@ -264,9 +264,11 @@ class Storage {
   /**
    * get stored initial referring domain
    */
-  getInitialReferringDomain(value){
+  getInitialReferringDomain(value) {
     return this.parse(
-      this.decryptValue(this.storage.get(defaults.page_storage_init_referring_domain))
+      this.decryptValue(
+        this.storage.get(defaults.page_storage_init_referring_domain)
+      )
     );
   }
 

@@ -1,7 +1,6 @@
 import clone from "@ndhoule/clone";
 import cookie from "rudder-component-cookie";
 import defaults from "@ndhoule/defaults";
-import json from "json3";
 import topDomain from "@segment/top-domain";
 import logger from "../logUtil";
 
@@ -26,7 +25,8 @@ class CookieLocal {
 
     // the default maxage and path
     this._options = defaults(options, {
-      maxage: 31536000000,
+      maxage: 60 * 30, // Expiry after 30 minutes
+      secure: true,
       path: "/",
       domain,
       samesite: "Lax",
